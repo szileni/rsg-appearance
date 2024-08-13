@@ -909,20 +909,19 @@ function LoadBodyFeature(target, data, bodyFeatureTable)
     Citizen.InvokeNative(0xCC8CA3E88256E58F, target, false, true, true, true, false)
 end
 
+function LoadTeeth(target, data)
+    if IsPedMale(PlayerPedId()) then
+        Citizen.InvokeNative(0xD3A7B003ED343FD9, PlayerPedId(), ComponentsMale["teeth"][tonumber(data.teeth) or 1], true, true, true)
+    else
+        Citizen.InvokeNative(0xD3A7B003ED343FD9, PlayerPedId(), ComponentsFemale["teeth"][tonumber(data.teeth) or 1], true, true, true)
+    end
+end
+
 function LoadFeatures(target, data)
     for k, v in pairs(Data.features) do
         if data[k] ~= nil then
             local value = data[k] / 100
             NativeSetPedFaceFeature(target, v, value)
-
-            if v == 'teeth' then
-                if IsPedMale(PlayerPedId()) then
-                    Citizen.InvokeNative(0xD3A7B003ED343FD9, PlayerPedId(), ComponentsMale["teeth"][tonumber(data.teeth) or 1], true, true, true)
-                else
-                    Citizen.InvokeNative(0xD3A7B003ED343FD9, PlayerPedId(), ComponentsFemale["teeth"][tonumber(data.teeth) or 1], true, true, true)
-                end
-            end
-
             Citizen.InvokeNative(0xCC8CA3E88256E58F, target, false, true, true, true, false)
         end
     end
